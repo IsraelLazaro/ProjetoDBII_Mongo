@@ -1,0 +1,50 @@
+/* BOTÃO DE PESQUISA */
+.search-input {
+    margin-top: 2%;
+    width: 93%;
+    height: 3vh;
+    padding: 9px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}  
+@media screen and (max-width: 25vw) {
+    .search-input {
+        width: 90%;
+    }
+}  
+.search-input:focus {
+    outline: none;
+    border-color: #4c8bf5;
+    box-shadow: 0 0 0 2px rgba(76, 139, 245, 0.4);
+}
+/*Formatação do HTML gerado pel JS pra inserir os eventos do BANCO*/
+.containerEvento{
+    position: relative;
+    overflow: hidden;
+    height: 7vh;
+}
+#listaEv{      
+    opacity: 1;
+    width: auto;
+    color: rgb(5, 5, 5);
+}
+.title{
+    border-radius: 5px;
+    border-bottom-style:double;        
+}
+.containerEvento:hover{
+    height: auto;
+}    
+.evt{
+    border-radius: 10px 20px;
+    background-color: rgb(161, 174, 187);
+}
+.descr{
+    text-align: justify;
+}
+.dat{
+    text-align: right;
+    font-size: small;
+}

@@ -6,8 +6,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>EVENTOS</title>
       <link rel="stylesheet" type="text/css"  href="../css/style.css">
+      <link rel="stylesheet" type="text/css"  href="../css/index.css">
 <!-- API MAPS -->
-      <script type="module" src="./js/maps.js"></script>     
+      <script type="module" src="../js/funcoes.js"></script> 
+      <script type="module" src="../js/post-maps.js"></script>          
       <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>    
   </head>
   <body>
@@ -15,7 +17,7 @@
       <header>
           <nav>
               <ul>
-                <li><a href="/index.html">Página Inicial</a></li>
+                <li><a href="/views/index.html">Página Inicial</a></li>
                 <li><a href="#">Sobre</a></li>
                 <li class="dropdown">
                   <a href="javascript:void(0)" class="dropbtn">Eventos anteriores</a>
@@ -63,7 +65,7 @@
                 <label for="descricao"></label>
                   <textarea maxlength="350" class="cxtxt2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
                 <button id="btnSalvar" type="button" class="cad"  method="POST" > CADASTRAR </button>
-                <a href="./index.html"><button id="back" type="button" class="cad"  method="POST" > VOLTAR </button></a>
+                <button id="back" type="button" class="cad"  method="POST" > VOLTAR </button>
               </form>
             </div>
           </section>

@@ -1,277 +1,182 @@
- /* MAPS */
- #map {
-    width: 100%; 
-    height: 300px;
-    height: 95%; 
-  }
-  @media screen and (max-width: 768px) {
-    .maps {
-      height: 200px; /* Reduzir a altura para dispositivos menores */
-      
-    }
-  }
-  .button-container {
-    display: inline-block;
-  }
-  
-  .custom-button {
-    margin-right: 10px;
-  }
-   /* FIM MAPS */
-   /* CORPO DA PÁGINA */
-  body, html {
-      height: 100%;
-      margin: 0;
-      padding: 0; 
-      text-align: justify; 
-      background: linear-gradient(90deg, #f2f0f0, #8f8e89, #c4d8d9);
-  }
-  
-  header {
-      background: linear-gradient(90deg, #f2f0f0, #8f8e89, #c4d8d9);
-      padding: 10px;  
-    }
+/* MAPS */
+#map {
+  width: 100%; 
+  height: 300px;
+  height: 95%; 
+}
+@media screen and (max-width: 768px) {
+  .maps {
+    height: 200px; /* Reduzir a altura para dispositivos menores */
     
-    main {
-      display: flex;
-      height: calc(100% - 40px); /* Altura total da janela menos a altura do cabeçalho e rodapé */
-    }
-    
-    .left-section, .right-section {
-      flex-basis: 50%;
-      padding: 20px; 
-      /* Defina um tamanho inicial para a seção */
-      width: 100%;
-      max-width: 500px; /* Por exemplo, um máximo de 500px */
-      margin: 0 auto; /* Centralize horizontalmente a seção */
-    }
-    /* Defina regras de estilo específicas para tamanhos de tela menores */
-    @media screen and (max-width: 768px) {
-      .right-section {
-        max-width: 100%; /* Altere o tamanho máximo para preencher a largura total */
-      }
-    }
-    .left-section {
-      /* background-color: #f9f9f9; */
-  
-      width: 100%; /* Define a largura da seção como 100% */
-      max-width: 500px; /* Define um tamanho máximo para a seção */
-      margin: 0 auto; /* Centraliza a seção horizontalmente */ 
-     
-    }
-    @media screen and (max-width: 768px) {
-      .left-section {
-        max-width: 100%; /* Altera o tamanho máximo para preencher a largura total */
-        padding: 10px; /* Adiciona um espaçamento interno para melhor legibilidade */
-        font-size: 2vw;
-      }
-      
-      .cxtxt,
+  }
+}
+.button-container {
+  display: inline-block;
+}
+
+.custom-button {
+  margin-right: 10px;
+}
+ /* FIM MAPS */
+/* CORPO DA PÁGINA */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0; 
+  text-align: justify; 
+  background: linear-gradient(90deg, #f2f0f0, #8f8e89, #c4d8d9);
+}
+header {
+  background: linear-gradient(90deg, #f2f0f0, #8f8e89, #c4d8d9);
+  padding: 10px;  
+}
+main {
+  display: flex;
+  height: calc(100% - 40px); /* Altura total da janela menos a altura do cabeçalho e rodapé */
+}
+/* Dividindo as sections e divs da Página */
+.left-section, .right-section {
+  flex-basis: 50%;
+  padding: 20px; 
+  /* Defina um tamanho inicial para a seção */
+  width: 100%;
+  max-width: 500px; /* Por exemplo, um máximo de 500px */
+  margin: 0 auto; /* Centralize horizontalmente a seção */
+}
+/* Defina regras de estilo específicas para tamanhos de tela menores */
+@media screen and (max-width: 768px) {
+  .right-section {
+    max-width: 100%; /* Altere o tamanho máximo para preencher a largura total */
+  }
+}
+.left-section {
+  width: 100%; /* Define a largura da seção como 100% */
+  max-width: 500px; /* Define um tamanho máximo para a seção */
+  margin: 0 auto; /* Centraliza a seção horizontalmente */  
+}
+@media screen and (max-width: 768px) {
+  .left-section {
+    max-width: 100%; /* Altera o tamanho máximo para preencher a largura total */
+    padding: 10px; /* Adiciona um espaçamento interno para melhor legibilidade */
+    font-size: 2vw;
+  }
+  .cxtxt,
       .cxtxt2 {
         width: 100%; /* Define a largura dos inputs e textarea como 100% */
       }
     }
     .right-section {
-    min-width: calc(100% - 30%);
-      /* background-color: #f9f9f9; */
-    }
+      min-width: calc(100% - 30%);
+        /* background-color: #f9f9f9; */
+      }
   /* CABEÇALHO */  
   header {
-      background-color: #f1f1f1;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    
-    nav li {
-      float: left;
-    }
-    
-    nav li a {
-      display: block;
-      color: #333;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    
-    nav li a:hover {
-      border-radius: 5%;
-      background-color: #c5c9d4;
-    }
-    
-    .dropdown-content {
-      border-radius: 5%;
-      display: none;
-      position: absolute;
-      background-color: rgb(218, 217, 217, 0.96);
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(37, 38, 40, 0.2);
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      color: #333;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    
-    .logo {
-      max-width:3%;
-      height: auto;
-    }
-    
-  /* Tela de cadastro */
-  .telaCad{
-    border: 1px solid #ccc;
-    border-radius: 5%;
-    padding: 3%;
-    background-color: rgba(243, 243, 252, 0.3);
-  }
-  .cxtxt,
-  .cxtxt2 {
-    opacity: 0.5;
-    width: 100%;
+    background-color: #f1f1f1;
     padding: 10px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    box-shadow: #333;
-  }
-  .cxtxt:focus,
-  .cxtxt2:focus {
-    opacity: 1;
-    outline: none; /* remover o contorno ao focar */
-    border-color: #0f13ea; /* cor da borda ao focar */
-    box-shadow: 0 0 5px rgba(16, 45, 189, 0.5);
-  }
-  
-  #btnsalvar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }  
+  nav li {
+    float: left;
+  }  
+  nav li a {
     display: block;
-    width: 100%;
-  }
-  
-  /* Estilos para dispositivos menores */
-  @media screen and (max-width: 480px) {
-    .cxtxt,
-    .cxtxt2 {
-      padding: 8px;
-    }
-  }
-  /* Tela de cadastro */
-  
-    /* botões */
-    .cad {
-      display: inline-block;
-      background-color: #1060a7;
-      color: white;
-      text-align: center;
-      padding: 10px 20px;
-      text-decoration: none;
-      font-size: 16px;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-    
-    .cad:hover {
-      background-color: #1c8321;
-    }
-    
-    @media screen and (max-width: 600px) {
-      .cad {
-        display: block;
-        margin: 10px auto;
-        width: 80%;
-        font-size: 2vw;
-      }
-    }
-    #confirmacao{
-      padding-top: 40%;
-      text-align: center;
-      font-size:larger;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
-    #confirmacao h2{
-      color: rgb(23, 22, 22);
-      font-size: xx-large;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: rgb(0, 26, 255); /* Cor do efeito */
-    } 
-  
-    /*Formatação do HTML gerado pel JS pra inserir os eventos do BANCO*/
-    .containerEvento{
-      position: relative;
-      overflow: hidden;
-      height: 7vh;
-  }
-  #listaEv{
-    
-      opacity: 1;
-      width: auto;
-      color: rgb(5, 5, 5);
-  }
-  .title{
-      border-radius: 5px;
-      border-bottom-style:double;
-      
-  }
-  .containerEvento:hover{
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }  
+  nav li a:hover {
+    border-radius: 5%;
+    background-color: #c5c9d4;
+  }  
+  .dropdown-content {
+    border-radius: 5%;
+    display: none;
+    position: absolute;
+    background-color: rgb(218, 217, 217, 0.96);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(37, 38, 40, 0.2);
+    z-index: 1;
+  }  
+  .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }  
+  .logo {
+    max-width:3%;
     height: auto;
   }
-  
-  .evt{
-    border-radius: 10px 20px;
-    background-color: rgb(161, 174, 187);
-  }
-  .descr{
-    text-align: justify;
-  }
-  .dat{
-    text-align: right;
-    font-size: small;
-  }
-  
-  /* BOTÃO DE PESQUISA */
-  .search-input {
-    margin-top: 2%;
-    width: 93%;
-    height: 3vh;
-    padding: 9px;
-    font-size: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media screen and (max-width: 25vw) {
-    .search-input {
-      width: 90%;
+    /* Tela de cadastro */
+    .telaCad{
+      border: 1px solid #ccc;
+      border-radius: 5%;
+      padding: 3%;
+      background-color: rgba(243, 243, 252, 0.3);
     }
-  }
-  
-  .search-input:focus {
-    outline: none;
-    border-color: #4c8bf5;
-    box-shadow: 0 0 0 2px rgba(76, 139, 245, 0.4);
-  }
-  
-  
-  
-  
+    .cxtxt,
+    .cxtxt2 {
+      opacity: 0.5;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      box-shadow: #333;
+    }
+    .cxtxt:focus,
+    .cxtxt2:focus {
+      opacity: 1;
+      outline: none; /* remover o contorno ao focar */
+      border-color: #0f13ea; /* cor da borda ao focar */
+      box-shadow: 0 0 5px rgba(16, 45, 189, 0.5);
+    }
+    
+    #btnsalvar {
+      display: block;
+      width: 100%;
+    }
+    
+    /* Estilos para dispositivos menores */
+    @media screen and (max-width: 480px) {
+      .cxtxt,
+      .cxtxt2 {
+        padding: 8px;
+      }
+    }
+/* Tela de cadastro */
+/* Ancora de Botão CAD */
+.cad {
+  display: inline-block;
+  background-color: #1060a7;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}        
+.cad:hover {
+  background-color: #1c8321;
+}        
+@media screen and (max-width: 600px) {
+  .cad {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+    font-size: 2vw;
+    }
+}
