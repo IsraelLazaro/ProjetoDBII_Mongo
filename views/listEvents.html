@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>LISTA DE EVENTOS</title>
+      <!-- API MAPS -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <link rel="stylesheet" type="text/css" href="../css/style.css" />  
+  </head>
+  <body>
+      <header>
+          <nav>
+              <ul>
+                <li><a href="/views/index.html">Página Inicial</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li class="dropdown">
+                  <a href="javascript:void(0)" class="dropbtn">Eventos anteriores</a>
+                    <div class="dropdown-content">
+                      <a href="#">2021</a>
+                      <a href="#">2022</a>
+                      <a href="/views/listEvents.html">2023</a>
+                    </div>
+                </li>
+                <li><a href="#">Contato</a></li>
+              </ul>
+            </nav>
+            <img src="https://cdn-icons-png.flaticon.com/512/888/888856.png?w=360" alt="Logo" class="logo">
+      </header>
+      <main>
+        <!-- Listando todos os eventos do banco e mostrando na página com innerHTML -->
+        <section id="telaEventos" class="left-section">
+          <div  class="formsList">
+            <div class="title">
+              <h4>EVENTOS CADASTRADOS</h4>               
+            </div>
+            <input id="busca" class="search-input" type="text" name="pesquisa" placeholder="Buscar Eento...">
+            <div id="listaEv">
+            </div>                
+          </div>
+        </section>
+<!-- TELA PARA ATUALIZAR OS EVENTOS - só aparece quando clicado no link "EDITAR" no link criado no JS -->
+        <section id="telaCadastro" class="left-section"hidden >
+          <div class="telaCad">
+            <h2>EVENTO</h2>
+            <form action="/novo" method="post" id="eventForm" >               
+              <label for="nomeEvento"></label>
+                <input class="cxtxt" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
+              <label for="dataInicio" style="opacity: 0.3;">Início</label>
+                <input class="cxtxt" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
+              <label for="dataTermino" style="opacity: 0.3;">Término</label>
+                <input class="cxtxt" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
+              <label for="coordenadas"></label>
+                <input  class="cxtxt" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
+              <label for="descricao"></label>
+                <textarea maxlength="350" class="cxtxt2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
+              <button id="btnAtualizar" type="button" class="cad"  method="POST" > ATUALIZAR </button>
+              <a href="./listEvents.html"><button id="back" type="button" class="cad"  method="POST" > VOLTAR </button></a>
+            </form>
+          </div>
+        </section>      
+        <section class="right-section">
+            <!-- <h2>MENU MAPA</h2>
+            <a href="#" class="cad" id="opcao1">BUSCAR</a>
+            <a href="#" class="cad">MOSTRAR TODOS</a>
+            <a href="#" class="cad">OPÇÃO 3</a> -->           
+          <div id="map"></div>           
+        </section>
+      </main>
+    <footer>
+      Banco de Dados II - 2023 © - <small>Analise e Desenvolvimento de Sistemas</small> - ADS™ 
+    </footer>
+      <script type="module" src="./js/maps_read.js"></script>
+      <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "", v: "weekly"});</script>
+  </body>
+</html>

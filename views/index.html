@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>EVENTOS</title>
+      <link rel="stylesheet" type="text/css"  href="../css/style.css">
+<!-- API MAPS -->
+      <script type="module" src="./js/maps.js"></script>     
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>    
+  </head>
+  <body>
+<!-- Adicionando o cabeçalho -->
+      <header>
+          <nav>
+              <ul>
+                <li><a href="/index.html">Página Inicial</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li class="dropdown">
+                  <a href="javascript:void(0)" class="dropbtn">Eventos anteriores</a>
+                    <div class="dropdown-content">
+                      <a href="#">2021</a>
+                      <a href="#">2022</a>
+                      <a href="/views/listEvents.html">2023</a>
+                    </div>
+                </li>
+                <li><a href="#">Contato</a></li>
+              </ul>
+            </nav>
+            <img src="https://cdn-icons-png.flaticon.com/512/888/888856.png?w=360" alt="Logo" class="logo">
+      </header>
+      <main>
+<!-- Apresentação da aplicação WEB -->
+          <section id="telaApresentacao" class="left-section" >
+            <h2>EVENT MAPS</h2>
+              <p>Os principais eventos reaizados em sua cidade reunidos de maneira
+                párica e rapida. Acesse agora e fique por dentro de tudo que ocorre 
+                nas pesquisas de tecnologia ou cadastre seu evento e entre para o 
+                novo mundo.
+              </p>
+            <a href="#" class="cad" id="chamarTelaCad">Cadastrar Evento</a>
+            <div id="confirmacao" style="display: none;">
+              <h2></h2>
+            </div>
+<!-- Tela para cadastrar evento - só aparece quando clicado no link "Cadastrar Evento" da section anterior -->
+          </section>
+          <section id="telaCadastro" class="left-section" hidden>
+            <div class="telaCad">
+              <h2>CADASTRE SEU EVENTO</h2>
+              <form action="/novo" method="post" id="eventForm">      
+                <h3 >CADASTRO DE EVENTOS</h3>
+                <label for="author"></label>
+                  <input class="cxtxt" type="text" name="author" id="author" placeholder="Responsável" required>
+                <label for="nomeEvento"></label>
+                  <input class="cxtxt" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
+                <label for="dataInicio" style="opacity: 0.3;">Início</label>
+                  <input class="cxtxt" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
+                <label for="dataTermino" style="opacity: 0.3;">Término</label>
+                  <input class="cxtxt" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
+                <label for="coordenadas"></label>
+                  <input  class="cxtxt" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
+                <label for="descricao"></label>
+                  <textarea maxlength="350" class="cxtxt2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
+                <button id="btnSalvar" type="button" class="cad"  method="POST" > CADASTRAR </button>
+                <a href="./index.html"><button id="back" type="button" class="cad"  method="POST" > VOLTAR </button></a>
+              </form>
+            </div>
+          </section>
+<!-- Section responsável por alocar o map -->
+          <section class="right-section">
+            <div class="maps" id="map">
+            </div>
+          </section>        
+        </main>
+  <footer>
+    Banco de Dados II - 2023 © - <small>Analise e Desenvolvimento de Sistemas</small> - ADS™ 
+  </footer>
+      <script type="module" src="./js/maps_crud.js"></script>
+      <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "", v: "weekly"});</script> 
+  </body>
+</html>
