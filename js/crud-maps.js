@@ -1,5 +1,4 @@
 let map;
-window.Map=map;
 let marker;
 window.marker=marker;
 let infoWindows=[];
@@ -33,7 +32,7 @@ async function addMarker(nome, descricao, lati, long){
         });
         markers.push(marker);
 };
-async function editMarker(nome, descricao, lati, long){
+function editMarker(nome, descricao, lati, long){
     markers=[];
     infoWindows=[];
     marker = new google.maps.Marker({
@@ -46,6 +45,7 @@ async function editMarker(nome, descricao, lati, long){
         });
         markers.push(marker); 
         setMarkes();
+        ativarMarcadores();       
 };
 async function setMarkes(){     
     for (let i = 0; i < markers.length; i++) {
@@ -74,6 +74,20 @@ function limparMarcadores(){
     markers=[];
     infoWindows=[];
 };
+/* Essa função é utilizada para limpar os marcadores do mapa */
+/* durante a pesquisa */
 window.limparMarcadores=limparMarcadores;
 
+function ativarMarcadores(){
+    map.addListener("click", (event)=>{
+        addMarker(event);              
+    });    
+    function addMarker(event){
+        
+        marker.setPosition(event.latLng);
+        const imput = document.getElementById("eventCoordinates");
+        imput.value = event.latLng;        
+        marker.setDraggable(true);
+    };    
+};
 
