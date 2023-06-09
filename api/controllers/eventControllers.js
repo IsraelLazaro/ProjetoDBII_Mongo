@@ -3,7 +3,7 @@ const {Evento} = require('../models/eventModel');
 /* Essa função lista todos os eventos do Banco */
 const listarEventos= async(req,res)=>{
     /* Coloca-se a visibilidade do _id e o __V como falsa */
-    Evento.find({}, {_id:false, __v:false}).then(result =>{
+    Evento.find({}, {_id:true, __v:false}).then(result =>{
         res.status(200).send(result)
     }).catch(e=> res.status(400).send(e));
 };
@@ -39,7 +39,7 @@ const deletarEvento = async (req,res)=>{
 /* Essa função faz buscas de texto nos eventos e traz aqueles que contém o texto */
 const buscarEvento = async (req,res) =>{
     /* Recebe um texto e faz busca*/
-    Evento.find({$text:{$search:req.params.texto}},{_id:false, __v:false}).then(result => {
+    Evento.find({$text:{$search:req.params.texto}},{_id:true, __v:false}).then(result => {
         res.status(200).send(result);
     }).catch(e => res.status(400).send(e));
                 
