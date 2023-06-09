@@ -64,6 +64,7 @@ async function setMarkes(){
         markers[i].setAnimation(google.maps.Animation.BOUNCE);
         };
 };
+window.setMarkes = setMarkes;
 window.addMarker = addMarker;
 window.editMarker = editMarker;
 

@@ -2,6 +2,7 @@ const divEventos = document.querySelector('#listaEv');
 const secEvnt = document.querySelector('#telaEventos');
 const secEdit = document.querySelector('#telaCadastro');
 const btnB = document.querySelector('.search-button');
+const textoBusca = document.querySelector('#busca');
 const urlApi = 'http://localhost:3000/eventos';
 window.urlApi =urlApi;
 
@@ -111,7 +112,6 @@ recuperei as coordenadas do DOM como texto e transformei em números para atuali
         });
     };
 };
-
 /* Essa função conecta com a API e faz um PUT do obj recebido  
 atualizando o evento no Banco de Dados pelo id recebido */
 async function atualizarInfoEvento(obj, id){
@@ -141,8 +141,31 @@ async function atualizarInfoEvento(obj, id){
     }
 };
 window.atualizarInfoEvento=atualizarInfoEvento;
-
-// Inicio da função para realizar a troca das divs na apresentação da página
+// Esse grupo de funções fazem a busca por texto nos eventos da API
+textoBusca.addEventListener('input', (event)=>{
+    const textoDigitado = event.target.value;
+    buscar(textoDigitado);
+});
+function buscar(texto){
+    divEventos.innerHTML="";
+    buscarEvento(texto)
+};
+async function buscarEvento(texto){
+    try {
+        const response = await fetch(`${urlApi}/${texto}`);
+        if (response.ok) {
+            const eventos = await response.json();
+            limparMarcadores();
+            mostrarEventos(eventos);
+            setMarkes();            
+        } else {
+            console.log('Erro ao buscar eventos:', response.status);
+        }
+    } catch (error) {
+        console.log('Ocorreu um erro na busca:', error);
+    }
+};
+// Essa função realiza a troca das divs na apresentação da página
 function trocarDivis(div1, div2, duracao){
     let opacidadeDiv1 = 0;
     let opacidadeDiv2 = 1;
