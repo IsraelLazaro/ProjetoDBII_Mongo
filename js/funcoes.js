@@ -4,8 +4,8 @@ const secEdit = document.querySelector('#telaCadastro');
 const btnB = document.querySelector('.search-button');
 const urlApi = 'http://localhost:3000/eventos';
 window.urlApi =urlApi;
-let markers =[];
-window.markers=markers;
+
+
 
 
 /*BLOCO DE FUNÇÕES  */
@@ -74,8 +74,9 @@ window.editar = function(id, autor, nome, descricao, dataIn, dataTer, lati, long
     const validarAutor = prompt('Ensira o nome do autor do cadastro');
     if(validarAutor===autor){
         limparMarcadores();
-        editMarker(nome, descricao);
+        editMarker(nome, descricao, lati, long);
         trocarDivis(secEdit, secEvnt, 400);
+      
         document.querySelector('#eventName').value=nome;
         document.querySelector('#dataInicio').valueAsDate=dataInicio;
         document.querySelector('#dataTermino').valueAsDate=dataTermino;
@@ -189,13 +190,7 @@ function stringParaData(data){
 };
 /* Essa função é utilizada para limpar os marcadores do mapa */
 /* durante a pesquisa */
-function limparMarcadores(){
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null); 
-    }
-    markers=[];
-    infoWindows=[];
-};
+
 
 
 

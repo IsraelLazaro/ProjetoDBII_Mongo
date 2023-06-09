@@ -1,8 +1,9 @@
 let map;
+window.Map=map;
 let marker;
 window.marker=marker;
 let infoWindows=[];
-window.infoWindows=infoWindows;
+let markers =[];
 let center = {lat:-6.892021526686363, lng:-38.55870364759306};
 
 async function initMap() {
@@ -32,20 +33,20 @@ async function addMarker(nome, descricao, lati, long){
         });
         markers.push(marker);
 };
-async function editMarker(nome, descricao){
+async function editMarker(nome, descricao, lati, long){
     markers=[];
     infoWindows=[];
     marker = new google.maps.Marker({
         position: {
-            lat: marker.getPosition().lat(),
-            lng: marker.getPosition().lng()
+            lat: parseFloat(lati),
+            lng: parseFloat(long)
             },
             map: map,
             title: `<h4 style="border-bottom-style:groove;">${nome}</h4><p>${descricao}</p>`,
         });
-        markers.push(marker);
+        markers.push(marker); 
         setMarkes();
-}
+};
 async function setMarkes(){     
     for (let i = 0; i < markers.length; i++) {
         marker = markers[i];
@@ -66,7 +67,13 @@ async function setMarkes(){
 window.addMarker = addMarker;
 window.editMarker = editMarker;
 
-
-
+function limparMarcadores(){
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null); 
+    }
+    markers=[];
+    infoWindows=[];
+};
+window.limparMarcadores=limparMarcadores;
 
 
