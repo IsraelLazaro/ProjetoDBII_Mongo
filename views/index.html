@@ -19,14 +19,7 @@
               <ul>
                 <li><a href="/views/index.html">Página Inicial</a></li>
                 <li><a href="#">Sobre</a></li>
-                <li class="dropdown">
-                  <a href="javascript:void(0)" class="dropbtn">Eventos anteriores</a>
-                    <div class="dropdown-content">
-                      <a href="#">2021</a>
-                      <a href="#">2022</a>
-                      <a href="/views/listEvents.html">2023</a>
-                    </div>
-                </li>
+                <li><a href="/views/listEvents.html" >Eventos Cadastrados</a></li>
                 <li><a href="#">Contato</a></li>
               </ul>
             </nav>
@@ -48,22 +41,22 @@
 <!-- Tela para cadastrar evento - só aparece quando clicado no link "Cadastrar Evento" da section anterior -->
           </section>
           <section id="telaCadastro" class="left-section" hidden>
-            <div class="telaCad">
+            <div class="telaDeCadastro">
               <h2>CADASTRE SEU EVENTO</h2>
               <form action="/novo" method="post" id="eventForm">      
                 <h3 >CADASTRO DE EVENTOS</h3>
                 <label for="author"></label>
-                  <input class="cxtxt" type="text" name="author" id="author" placeholder="Responsável" required>
+                  <input class="caixaTextoCadastro" type="text" name="author" id="author" placeholder="Responsável" required>
                 <label for="nomeEvento"></label>
-                  <input class="cxtxt" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
+                  <input class="caixaTextoCadastro" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
                 <label for="dataInicio" style="opacity: 0.3;">Início</label>
-                  <input class="cxtxt" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
+                  <input class="caixaTextoCadastro" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
                 <label for="dataTermino" style="opacity: 0.3;">Término</label>
-                  <input class="cxtxt" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
+                  <input class="caixaTextoCadastro" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
                 <label for="coordenadas"></label>
-                  <input  class="cxtxt" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
+                  <input  class="caixaTextoCadastro" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
                 <label for="descricao"></label>
-                  <textarea maxlength="350" class="cxtxt2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
+                  <textarea maxlength="350" class="caixaTextoCadastro2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
                 <button id="btnSalvar" type="button" class="cad"  method="POST" > CADASTRAR </button>
                 <button id="back" type="button" class="cad"  method="POST" > VOLTAR </button>
               </form>

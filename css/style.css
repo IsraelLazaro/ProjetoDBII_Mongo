@@ -1,21 +1,15 @@
 /* MAPS */
 #map {
   width: 100%; 
-  height: 300px;
-  height: 95%; 
+  height: 85vh;
+  border-radius: 1%;
+
 }
 @media screen and (max-width: 768px) {
   .maps {
     height: 200px; /* Reduzir a altura para dispositivos menores */
     
   }
-}
-.button-container {
-  display: inline-block;
-}
-
-.custom-button {
-  margin-right: 10px;
 }
  /* FIM MAPS */
 /* CORPO DA PÁGINA */
@@ -60,8 +54,8 @@ main {
     padding: 10px; /* Adiciona um espaçamento interno para melhor legibilidade */
     font-size: 2vw;
   }
-  .cxtxt,
-      .cxtxt2 {
+  .caixaTextoCadastro,
+      .caixaTextoCadastro2 {
         width: 100%; /* Define a largura dos inputs e textarea como 100% */
       }
     }
@@ -97,37 +91,19 @@ main {
     border-radius: 5%;
     background-color: #c5c9d4;
   }  
-  .dropdown-content {
-    border-radius: 5%;
-    display: none;
-    position: absolute;
-    background-color: rgb(218, 217, 217, 0.96);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(37, 38, 40, 0.2);
-    z-index: 1;
-  }  
-  .dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }  
   .logo {
     max-width:3%;
     height: auto;
   }
     /* Tela de cadastro */
-    .telaCad{
+    .telaDeCadastro{
       border: 1px solid #ccc;
       border-radius: 5%;
       padding: 3%;
       background-color: rgba(243, 243, 252, 0.3);
     }
-    .cxtxt,
-    .cxtxt2 {
+    .caixaTextoCadastro,
+    .caixaTextoCadastro2 {
       opacity: 0.5;
       width: 100%;
       padding: 10px;
@@ -136,8 +112,8 @@ main {
       border: 1px solid #ccc;
       box-shadow: #333;
     }
-    .cxtxt:focus,
-    .cxtxt2:focus {
+    .caixaTextoCadastro:focus,
+    .caixaTextoCadastro2:focus {
       opacity: 1;
       outline: none; /* remover o contorno ao focar */
       border-color: #0f13ea; /* cor da borda ao focar */
@@ -151,8 +127,8 @@ main {
     
     /* Estilos para dispositivos menores */
     @media screen and (max-width: 480px) {
-      .cxtxt,
-      .cxtxt2 {
+      .caixaTextoCadastro,
+      .caixaTextoCadastro2 {
         padding: 8px;
       }
     }

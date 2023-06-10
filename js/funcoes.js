@@ -1,4 +1,4 @@
-const divEventos = document.querySelector('#listaEv');
+const divEventos = document.querySelector('#listaDeEventos');
 const secEvnt = document.querySelector('#telaEventos');
 const secEdit = document.querySelector('#telaCadastro');
 const btnB = document.querySelector('.search-button');
@@ -6,15 +6,12 @@ const textoBusca = document.querySelector('#busca');
 const urlApi = 'http://localhost:3000/eventos';
 window.urlApi =urlApi;
 
-
-
-
 /*BLOCO DE FUNÇÕES  */
 // Essa função Salva o Evento no Banco de Dados MongoDB
 window.salvarEvento = async function salvarEvento(obj){
     const aux = document.querySelector('#eventCoordinates').value;
     if(obj.eventName==="" || obj.eventDescription==="" || obj.dataInicio==="" || aux===""){
-        alert('Preencha os campos obrigatórios!!');
+        alert('Campos obrigatórios não preenchidos. Tente novamente!!');        
     }else{
         try {
             const response = await fetch(urlApi, {
@@ -59,9 +56,9 @@ async function mostrarEventos(eventos){
         addMarker(nome, descricao,latiMostra, longMostra);
         const novoEvento =         
         `<div class="containerEvento">
-        <div class="evt"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
-        <div class="descr"><p>${descricao}</p></div>
-        <div class="dat"><b><p>Início: ${dataInicio}</p><p>Término: ${dataTermino}</p></div>
+        <div class="nomeEvento"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
+        <div class="descricaoMostra"><p>${descricao}</p></div>
+        <div class="dataMostra"><b><p>Início: ${dataInicio}</p><p>Término: ${dataTermino}</p></div>
         <div><a href="#" onclick = "editar('${id}','${autor}','${nome}',' ${descricao}',' ${dataInicio}',' ${dataTermino}',' ${latiMostra}',' ${longMostra}')" class="cad">EDITAR</a></div>
         </div>`;  
         divEventos.innerHTML = divEventos.innerHTML + novoEvento; 
@@ -110,6 +107,10 @@ recuperei as coordenadas do DOM como texto e transformei em números para atuali
             atualizarInfoEvento(eventoAtualizado, id);
             
         });
+        const btnDeletar = document.querySelector('#deletar');
+        btnDeletar.addEventListener('click', ()=>{
+            deletarEvento(nome, id);
+        });
     };
 };
 /* Essa função conecta com a API e faz um PUT do obj recebido  
@@ -141,32 +142,37 @@ async function atualizarInfoEvento(obj, id){
     }
 };
 window.atualizarInfoEvento=atualizarInfoEvento;
-// Esse grupo de funções fazem a busca por texto nos eventos da API
-textoBusca.addEventListener('input', (event)=>{
-    const textoDigitado = event.target.value;
-    buscar(textoDigitado);
-});
-function buscar(texto){
-    divEventos.innerHTML="";
-    buscarEvento(texto)
-};
-async function buscarEvento(texto){
-    try {
-        const response = await fetch(`${urlApi}/${texto}`);
-        if (response.ok) {
-            const eventos = await response.json();
-            limparMarcadores();
-            mostrarEventos(eventos);
-            setMarkes();            
-        } else {
-            console.log('Erro ao buscar eventos:', response.status);
-        }
-    } catch (error) {
-        console.log('Ocorreu um erro na busca:', error);
+
+// Essa função deleta o evento selecionado do banco
+async function deletarEvento(nome, id){
+    if(confirm(`Deseja realmente excluir o evento ${nome}?`)){
+        try {
+            const response = await fetch(`${urlApi}/${id}`, {
+                method: 'DELETE',
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                alert(`O evento ${nome} foi deletado com sucesso!!`)
+                trocarDivis(secEvnt, secEdit, 400);
+                limparMarcadores();
+                location.reload();
+            } else {
+                alert('Erro ao deletar evento!!');
+            }
+        } catch(erro){
+            alert('Ocorreu um erro ao deletar o evento.');
+            console.log(erro);
+        };
+    }else{
+        location.reload();
     }
+
+    
 };
 // Essa função realiza a troca das divs na apresentação da página
-function trocarDivis(div1, div2, duracao){
+async function trocarDivis(div1, div2, duracao){
     let opacidadeDiv1 = 0;
     let opacidadeDiv2 = 1;
     const intervalo = 10; 
@@ -228,9 +234,30 @@ function transfCoodenadasEmNumeros(coordenadas) {
     var lngCod = parseFloat(numeros[1].trim());
     return [latCod, lngCod]; 
 };
-
-
-
+// Esse grupo de funções fazem a busca por texto nos eventos da API
+textoBusca.addEventListener('input', (event)=>{
+    const textoDigitado = event.target.value;
+    buscar(textoDigitado);
+});
+function buscar(texto){
+    divEventos.innerHTML="";
+    buscarEvento(texto)
+};
+async function buscarEvento(texto){
+    try {
+        const response = await fetch(`${urlApi}/${texto}`);
+        if (response.ok) {
+            const eventos = await response.json();
+            limparMarcadores();
+            mostrarEventos(eventos);
+            setMarkes();            
+        } else {
+            console.log('Erro ao buscar eventos:', response.status);
+        }
+    } catch (error) {
+        console.log('Ocorreu um erro na busca:', error);
+    }
+};
 
 
 

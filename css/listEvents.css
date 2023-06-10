@@ -1,5 +1,5 @@
 /* BOTÃO DE PESQUISA */
-.search-input {
+.inputPesquisa {
     margin-top: 2%;
     width: 93%;
     height: 3vh;
@@ -10,11 +10,11 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }  
 @media screen and (max-width: 25vw) {
-    .search-input {
+    .inputPesquisa {
         width: 90%;
     }
 }  
-.search-input:focus {
+.inputPesquisa:focus {
     outline: none;
     border-color: #4c8bf5;
     box-shadow: 0 0 0 2px rgba(76, 139, 245, 0.4);
@@ -25,26 +25,27 @@
     overflow: hidden;
     height: 7vh;
 }
-#listaEv{      
+#listaDeEventos{      
     opacity: 1;
     width: auto;
     color: rgb(5, 5, 5);
 }
 .title{
+    font-size: larger;
     border-radius: 5px;
-    border-bottom-style:double;        
+    border-bottom-style:double;      
 }
 .containerEvento:hover{
     height: auto;
 }    
-.evt{
+.nomeEvento{
     border-radius: 10px 20px;
     background-color: rgb(161, 174, 187);
 }
-.descr{
+.descricaoMostra{
     text-align: justify;
 }
-.dat{
+.dataMostra{
     text-align: right;
     font-size: small;
 }

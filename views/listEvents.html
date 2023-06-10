@@ -18,19 +18,12 @@
   <body>
       <header>
           <nav>
-              <ul>
-                <li><a href="/views/index.html">Página Inicial</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li class="dropdown">
-                  <a href="javascript:void(0)" class="dropbtn">Eventos anteriores</a>
-                    <div class="dropdown-content">
-                      <a href="#">2021</a>
-                      <a href="#">2022</a>
-                      <a href="/views/listEvents.html">2023</a>
-                    </div>
-                </li>
-                <li><a href="#">Contato</a></li>
-              </ul>
+            <ul>
+              <li><a href="/views/index.html">Página Inicial</a></li>
+              <li><a href="#">Sobre</a></li>
+              <li><a href="/views/listEvents.html" >Eventos Cadastrados</a></li>
+              <li><a href="#">Contato</a></li>
+            </ul>
             </nav>
             <img src="https://cdn-icons-png.flaticon.com/512/888/888856.png?w=360" alt="Logo" class="logo">
       </header>
@@ -39,29 +32,30 @@
         <section id="telaEventos" class="left-section">
           <div  class="formsList">
             <div class="title">
-              <h4>EVENTOS CADASTRADOS</h4>               
+              <h2>EVENTOS CADASTRADOS</h2>               
             </div>
-            <input id="busca" class="search-input" type="text" name="pesquisa" placeholder="Buscar Eento...">
-            <div id="listaEv">
+            <input id="busca" class="inputPesquisa" type="text" name="pesquisa" placeholder="Buscar Eento...">
+            <div id="listaDeEventos">
             </div>                
           </div>
         </section>
 <!-- TELA PARA ATUALIZAR OS EVENTOS - só aparece quando clicado no link "EDITAR" no link criado no JS -->
         <section id="telaCadastro" class="left-section" hidden>
-          <div class="telaCad">
+          <div class="telaDeCadastro">
             <h2>EVENTO</h2>
             <form action="/novo" method="post" id="eventForm" >               
               <label for="nomeEvento"></label>
-                <input class="cxtxt" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
+                <input class="caixaTextoCadastro" type="text" name="nome" id="eventName" placeholder="Nome do evento" required>
               <label for="dataInicio" style="opacity: 0.3;">Início</label>
-                <input class="cxtxt" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
+                <input class="caixaTextoCadastro" type="date" name="nome" id="dataInicio" placeholder="dd-mm-yyyy" required>
               <label for="dataTermino" style="opacity: 0.3;">Término</label>
-                <input class="cxtxt" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
+                <input class="caixaTextoCadastro" type="date" name="nome" id="dataTermino" placeholder="dd-mm-yyyy" required>
               <label for="coordenadas"></label>
-                <input  class="cxtxt" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
+                <input  class="caixaTextoCadastro" type="text" name="nome" id="eventCoordinates" placeholder="Selecione no mapa" disabled="" required>
               <label for="descricao"></label>
-                <textarea maxlength="350" class="cxtxt2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
+                <textarea maxlength="350" class="caixaTextoCadastro2" type="text" name="nome" id="eventDescription" placeholder="Descrição do evento em 350 caracteres ou menos"></textarea>
               <button id="btnAtualizar" type="button" class="cad"  method="POST" > ATUALIZAR </button>
+              <button id="deletar" type="button" class="cad"  method="POST" > DELETAR </button>
               <a href="./listEvents.html"><button id="back" type="button" class="cad"  method="POST" > VOLTAR </button></a>
             </form>
           </div>
