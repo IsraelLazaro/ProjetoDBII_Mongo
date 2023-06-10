@@ -81,19 +81,25 @@ main {
     float: left;
   }  
   nav li a {
+    font-size: 25px;
     display: block;
-    color: #333;
+    color: #686767;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
   }  
   nav li a:hover {
-    border-radius: 5%;
-    background-color: #c5c9d4;
+    font-size: 26px;
+    font-weight: bold;
+    color: #000000;
+    transform: scale(1.2);
   }  
   .logo {
     max-width:3%;
     height: auto;
+  }
+  .logo:hover{
+    transform: scale(1.2);
   }
     /* Tela de cadastro */
     .telaDeCadastro{
