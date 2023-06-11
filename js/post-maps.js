@@ -1,4 +1,3 @@
-console.log('O arquivo post-maps.js está sendo executado.');
 let map;
 let marker;
 let center = {lat:-6.892021526686363, lng:-38.55870364759306};

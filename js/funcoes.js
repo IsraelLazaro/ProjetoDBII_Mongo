@@ -9,10 +9,16 @@ const btnRedis = document.querySelector('#btnRedis');
 const textoBusca = document.querySelector('#busca');
 const urlApi = 'http://localhost:3000/eventos';
 window.urlApi =urlApi;
-
+window.atualizarInfoEvento=atualizarInfoEvento;
+window.mostrarEventos =mostrarEventos;
+window.trocarDivis=trocarDivis;
+window.limparCampos = limparCampos;
+window.salvarEvento = salvarEvento;
+window.editar = editar;
+window.recuperarEvento= recuperarEvento;
 /*BLOCO DE FUNÇÕES  */
 // Essa função Salva o Evento no Banco de Dados MongoDB
-window.salvarEvento = async function salvarEvento(obj){
+async function salvarEvento(obj){
     const aux = document.querySelector('#eventCoordinates').value;
     if(obj.eventName==="" || obj.eventDescription==="" || obj.dataInicio==="" || aux===""){
         alert('Campos obrigatórios não preenchidos. Tente novamente!!');        
@@ -38,10 +44,10 @@ window.salvarEvento = async function salvarEvento(obj){
                     }, 5000);
             } else {
                 alert('Ocorreu um erro ao salvar o evento.');
-                }
+                };
         } catch (error) {
             console.error('Erro ao conectar com a API:', error);
-            }
+            };
     };
 };
 /* Essa função recebe os eventos do banco, monto o objeto e escreve no DOM
@@ -74,10 +80,9 @@ async function mostrarEventos(eventos){
         divEventos.innerHTML = divEventos.innerHTML + novoEvento; 
     });
 };
-window.mostrarEventos =mostrarEventos;
 /* Essa função vai receber os valores das propriedades dos objetos recuperados do banco
 em seguida, vai inserir nos campos da tela de cadastro para o usuário editar */
-window.editar = function(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
+function editar(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
     let dataInicio = new Date(stringParaData(dataIn));
     let dataTermino = new Date(stringParaData(dataTer));    
     const validarAutor = prompt('Ensira o nome do autor do cadastro');
@@ -128,6 +133,7 @@ recuperei as coordenadas do DOM como texto e transformei em números para atuali
                 lat: latiED,
                 lng: longED
             };
+            // Salvei o evento no REDIS e deletei do MONGO
             salvarEventoRedis(eventoRedis);
             deletarEvento(nome, id);
         });
@@ -154,15 +160,13 @@ async function atualizarInfoEvento(obj, id){
                 location.reload();
             }else{
                 alert('Erro ao atualizar evento!!');
-            }
+            };
         } catch (error) {
             console.log(error);
             alert('Ocorreu um erro ao atualizar o evento.');            
-        }
-    }
+        };
+    };
 };
-window.atualizarInfoEvento=atualizarInfoEvento;
-
 // Essa função deleta o evento selecionado do banco
 async function deletarEvento(nome, id){
     if(confirm(`Deseja realmente excluir o evento ${nome}?`)){
@@ -187,9 +191,7 @@ async function deletarEvento(nome, id){
         };
     }else{
         location.reload();
-    }
-
-    
+    };    
 };
 // Essa função realiza a troca das divs na apresentação da página
 async function trocarDivis(div1, div2, duracao){
@@ -198,7 +200,7 @@ async function trocarDivis(div1, div2, duracao){
     const intervalo = 10; 
     const targetOpacidade = 1;
     const increment = (targetOpacidade / duracao) * intervalo;
-/* Inicia um intervalo para aumentar a opacidade da div a ser mostrada */
+// Inicia um intervalo para aumentar a opacidade da div a ser mostrada 
     const fadeIntervalo = setInterval(() => {
         opacidadeDiv1 += increment;
         div1.style.opacity = opacidadeDiv1;
@@ -207,21 +209,20 @@ async function trocarDivis(div1, div2, duracao){
         div1.style.opacity = targetOpacidade; 
         div1.style.display = 'block'; 
         div2.style.display = 'none'; 
-        }
+        };
     }, intervalo);
-/* Inicia um intervalo para diminuir gradualmente a opacidade da div a ser ocultada */
+// Inicia um intervalo para diminuir gradualmente a opacidade da div a ser ocultada 
     const fadeOutIntervalo = setInterval(() => {
         opacidadeDiv2 -= increment;
         div2.style.opacity = opacidadeDiv2;
         if (opacidadeDiv2 <= 0) {
         clearInterval(fadeOutIntervalo); 
         div2.style.opacity = 0;
-        }
+        };
     }, intervalo);
 };
-window.trocarDivis=trocarDivis;
 // Essa Função limpas todos os campos do cadastro do HTML
-window.limparCampos = function limparCampos(){
+function limparCampos(){
     document.querySelector('#author').value="";
     document.querySelector('#eventName').value="";
     document.querySelector('#dataInicio').value="";
@@ -255,6 +256,7 @@ function transfCoodenadasEmNumeros(coordenadas) {
     return [latCod, lngCod]; 
 };
 /* ---------------------------------------REDIS--------------------------------------- */
+// Essa função salva o evento no REDIS 
 async function salvarEventoRedis(evento) {
     try {
         const response = await fetch(`${urlApi}/redis`, {
@@ -264,17 +266,21 @@ async function salvarEventoRedis(evento) {
         },
         body: JSON.stringify(evento)
     });
-        const data = await response.json();
-        console.log('Evento salvo no Redis:', data);
-        alert("REDIS!!! SALVO!!");
+        if (response.ok) {
+            console.log('Evento Salvo no Redis!!')
+            
+        } else {
+            console.log('Evento não foi Salvo!! ')
+        };
     } catch (error) {
         console.error('Erro ao salvar o evento no Redis:', error);
-    }
+    };
 }; 
 btnRedis.addEventListener('click', ()=>{
     const buscaAutor = document.querySelector('#buscaRedis').value;
     buscarNoRedis(buscaAutor);
 });
+// Essa função faz a busca no REDIS e monta o evento na tela de cadastro
 async function buscarNoRedis(texto){
     const conect = await fetch(`${urlApi}/redis/${texto}`);
     const evento = await conect.json();
@@ -297,7 +303,8 @@ async function buscarNoRedis(texto){
         </div>`;  
         divEventosRedis.innerHTML = divEventosRedis.innerHTML + exibirEvento; 
 };
-window.recuperarEvento=async function(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
+// Essa função faz a Pega as informações do evento , monta um novo evento e salva no MONGO
+async function recuperarEvento(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
     let dataInicio = new Date(stringParaData(dataIn));
     let dataTermino = new Date(stringParaData(dataTer)); 
     trocarDivis(secEdit, secEvntRedis, 400); 
@@ -321,18 +328,18 @@ window.recuperarEvento=async function(id, autor, nome, descricao, dataIn, dataTe
         lng: parseFloat(longED)
     };
     btnRecuperar.addEventListener('click', ()=>{
-        console.log(eventoRecuperado.eventName);
+        // console.log(eventoRecuperado.eventName);
         deletarEventoRedis(eventoRecuperado.eventName);
         const salvo = salvarEvento(eventoRecuperado);
         if (!salvo) {            
-            alert("Erro ao recuperar evento!")
+            alert('Erro ao recuperar evento!')
         } else {
-            alert("Evento recuperado!");
+            alert('Evento recuperado!');
             location.reload();
-        }
-        
+        };        
     });
 };
+//Essa função deleta o evento do redis (Peguntar ao professor se é necessário)
 async function deletarEventoRedis(texto){
     const conect = await fetch(`${urlApi}/redis/${texto}`, {
         method: 'DELETE',
@@ -341,18 +348,16 @@ async function deletarEventoRedis(texto){
             console.log('Evento deletado do Redis!');
         } else {
             console.log('Erro ao deletar evento do Redis:', conect.status);
-        }
+        };
 };
-
-// Função 3
+// Essa função faz a troca das divs para mostrar os eventos deletados
 const linkRecuperarRedis = document.querySelector('#recuperarEvento');
 linkRecuperarRedis.addEventListener('click', ()=>{
     abrirTelaRedis();
 });
 function abrirTelaRedis(){
     trocarDivis(secEvntRedis, secEvnt, 400);
-    limparMarcadores();
-    
+    limparMarcadores();    
 };
 /* ---------------------------------------REDIS--------------------------------------- */
 // Esse grupo de funções fazem a busca por texto nos eventos da API
@@ -362,7 +367,7 @@ textoBusca.addEventListener('input', (event)=>{
 });
 function buscar(texto){
     divEventos.innerHTML="";
-    buscarEvento(texto)
+    buscarEvento(texto);
 };
 async function buscarEvento(texto){
     try {
@@ -374,10 +379,10 @@ async function buscarEvento(texto){
             setMarkes();            
         } else {
             console.log('Erro ao buscar eventos:', response.status);
-        }
+        };
     } catch (error) {
         console.log('Ocorreu um erro na busca:', error);
-    }
+    };
 };
 
 

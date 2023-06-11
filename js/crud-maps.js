@@ -6,6 +6,7 @@ let center = {lat:-6.892021526686363, lng:-38.55870364759306};
 window.addMarker = addMarker;
 window.setMarkes = setMarkes;
 window.editMarker = editMarker;
+window.limparMarcadores=limparMarcadores;
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     map = new Map(document.getElementById("map"), {
@@ -15,6 +16,7 @@ async function initMap() {
 };
 initMap();
 todosOsEventos();
+//Essa função recebe um arry de marcadores e seta eles no mapa 
 async function setMarkes(){     
     for (let i = 0; i < markers.length; i++) {
         marker = markers[i];
@@ -25,13 +27,14 @@ async function setMarkes(){
         infoWindows.push(infoWindow);
         markers[i].addListener('click', function(){
             infoWindows[i].open(map, markers[i]); 
-            map.addListener("click", function() {
+            map.addListener('click', function() {
                 infoWindow.close();
                 }); 
             });
         markers[i].setAnimation(google.maps.Animation.BOUNCE);
         };
 };
+//Essa função adiciona o marcador no mapa e adiciona no arry de marcadores
 async function addMarker(nome, descricao, lati, long){
     marker = new google.maps.Marker({
         position: {
@@ -43,6 +46,9 @@ async function addMarker(nome, descricao, lati, long){
         });
         markers.push(marker);
 };
+// Essa função adiciona o marcador quando escolhido editar um evento
+// o mapa é desbloqueado e o usuário pode mover o marcador e escolher
+// um novo ponto no mapa
 function editMarker(nome, descricao, lati, long){
     markers=[];
     infoWindows=[];
@@ -58,22 +64,15 @@ function editMarker(nome, descricao, lati, long){
         setMarkes();
         ativarMarcadores();       
 };
+// Essa função mostra todos os eventos ao abrir a página 
 async function todosOsEventos(){
     const conect = await fetch(urlApi);    
     const eventos = await conect.json();    
     mostrarEventos(eventos);
     setMarkes();
 };
-/* ---------------------------REDIS------------------------------------- */
-async function listarEventosDoRedis(){ 
-        const conect = await fetch(`${urlApi}/redis`);
-        const eventos = await conect.json();
-        limparMarcadores();
-        
-        mostrarEventos(eventos);
-        setMarkes();    
-};
-/* ---------------------------REDIS------------------------------------- */
+// Essa função é utilizada para limpar os marcadores do mapa 
+// durante a pesquisa 
 function limparMarcadores(){
     for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null); 
@@ -81,12 +80,9 @@ function limparMarcadores(){
     markers=[];
     infoWindows=[];
 };
-/* Essa função é utilizada para limpar os marcadores do mapa */
-/* durante a pesquisa */
-window.limparMarcadores=limparMarcadores;
-
+// Essa função ativa o marcador por click
 function ativarMarcadores(){
-    map.addListener("click", (event)=>{
+    map.addListener('click', (event)=>{
         addMarker(event);              
     });    
     function addMarker(event){
