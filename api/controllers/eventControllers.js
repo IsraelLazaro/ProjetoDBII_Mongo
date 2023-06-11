@@ -1,5 +1,5 @@
 const {Evento} = require('../models/eventModel');
-
+const client = require('../dataBase/redisDB');
 /* Essa função lista todos os eventos do Banco */
 const listarEventos= async(req,res)=>{
     /* Coloca-se a visibilidade do _id e o __V como falsa */
@@ -9,7 +9,7 @@ const listarEventos= async(req,res)=>{
 };
 
 /* Essa função salva um novo evento no Banco */
-const salvarEvento = async (req,res) =>{
+const salvarEvento = async (req,res) =>{    
     /* Aqui é criado um novo objeto do tipo Evento */
     Evento.create(req.body).then(result => console.log(result));
     res.send("Evento Salvo com sucesso!");
@@ -17,7 +17,7 @@ const salvarEvento = async (req,res) =>{
 
 /* Essa função possibilita editar e atualizar um evento cadastrado no Banco */
 const editarEvento = async (req,res) =>{
-    /* O evento é buscado pelo id */
+    /* O evento é buscado pelo id */    
     Evento.findById(req.params.id).then(result =>{
         if(result){
             result.set(req.body);
@@ -28,8 +28,7 @@ const editarEvento = async (req,res) =>{
 };
 
 /* Essa função deleta um evento cadastrado no Banco */
-const deletarEvento = async (req,res)=>{
-    /* O evento é buscado pelo id */
+const deletarEvento = async (req,res)=>{   
     Evento.deleteOne({_id:req.params.id}).then(result => {
         if(result.deletedCount > 0) res.status(200).send('Removido com sucesso');
         else res.status(404).send('Evento não encontrada');
@@ -44,5 +43,39 @@ const buscarEvento = async (req,res) =>{
     }).catch(e => res.status(400).send(e));
                 
 };
+/* ---------------------------------------REDIS--------------------------------------------------- */
+const listarEventosRedis= async(req,res)=>{
+    const retorno = await client.get(req.params.chave);
+    if(retorno){
+        console.log('Evento encontrado!');
+        res.send(JSON.parse(retorno));
+    }else{
+        console.log('Não está no redis');
+    };
+};
+const salvarEventoRedis = async (req, res) => {
+    const evento = req.body;
+    console.log(evento.eventName);
+    await client.set(`${evento.eventName}`, JSON.stringify(evento),{
+        EX: 6000
+    });
+    
+    res.status(200).send('Evento salvo com sucesso no Redis');
+};
+const deletarDoRedis = async (req, res)=>{
+    try {
+        const retorno = await client.del(req.params.chave);
+        if (retorno) {
+            console.log('Evento deletado do Redis!');
+            res.status(200).send('Operação de exclusão concluída com sucesso.');
+        } else {
+            console.log('Chave não encontrada no Redis!');
+        }        
+    } catch (err) {
+        console.error('Erro ao deletar do Redis:', err);
+        res.status(500).send('Erro ao realizar a operação de exclusão.');
+    };
+};
+/* ---------------------------------------REDIS--------------------------------------------------- */
 
-module.exports = {listarEventos, salvarEvento, editarEvento, deletarEvento, buscarEvento};
+module.exports = {listarEventos, salvarEvento, editarEvento, deletarEvento, buscarEvento, salvarEventoRedis, listarEventosRedis, deletarDoRedis};

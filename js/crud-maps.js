@@ -1,10 +1,11 @@
 let map;
 let marker;
-window.marker=marker;
 let infoWindows=[];
 let markers =[];
 let center = {lat:-6.892021526686363, lng:-38.55870364759306};
-
+window.addMarker = addMarker;
+window.setMarkes = setMarkes;
+window.editMarker = editMarker;
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     map = new Map(document.getElementById("map"), {
@@ -12,14 +13,24 @@ async function initMap() {
         zoom: 14,
     }); 
 };
-initMap(); 
+initMap();
 todosOsEventos();
-
-async function todosOsEventos(){
-    const conect = await fetch(urlApi);    
-    const eventos = await conect.json();    
-    mostrarEventos(eventos);
-    setMarkes();
+async function setMarkes(){     
+    for (let i = 0; i < markers.length; i++) {
+        marker = markers[i];
+        markers[i].setMap(map);    
+        let infoWindow = new google.maps.InfoWindow({
+            content: `<h4>${markers[i].title}</h4>`
+            });
+        infoWindows.push(infoWindow);
+        markers[i].addListener('click', function(){
+            infoWindows[i].open(map, markers[i]); 
+            map.addListener("click", function() {
+                infoWindow.close();
+                }); 
+            });
+        markers[i].setAnimation(google.maps.Animation.BOUNCE);
+        };
 };
 async function addMarker(nome, descricao, lati, long){
     marker = new google.maps.Marker({
@@ -47,27 +58,22 @@ function editMarker(nome, descricao, lati, long){
         setMarkes();
         ativarMarcadores();       
 };
-async function setMarkes(){     
-    for (let i = 0; i < markers.length; i++) {
-        marker = markers[i];
-        markers[i].setMap(map);    
-        let infoWindow = new google.maps.InfoWindow({
-            content: `<h4>${markers[i].title}</h4>`
-            });
-        infoWindows.push(infoWindow);
-        markers[i].addListener('click', function(){
-            infoWindows[i].open(map, markers[i]); 
-            map.addListener("click", function() {
-                infoWindow.close();
-                }); 
-            });
-        markers[i].setAnimation(google.maps.Animation.BOUNCE);
-        };
+async function todosOsEventos(){
+    const conect = await fetch(urlApi);    
+    const eventos = await conect.json();    
+    mostrarEventos(eventos);
+    setMarkes();
 };
-window.setMarkes = setMarkes;
-window.addMarker = addMarker;
-window.editMarker = editMarker;
-
+/* ---------------------------REDIS------------------------------------- */
+async function listarEventosDoRedis(){ 
+        const conect = await fetch(`${urlApi}/redis`);
+        const eventos = await conect.json();
+        limparMarcadores();
+        
+        mostrarEventos(eventos);
+        setMarkes();    
+};
+/* ---------------------------REDIS------------------------------------- */
 function limparMarcadores(){
     for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null); 

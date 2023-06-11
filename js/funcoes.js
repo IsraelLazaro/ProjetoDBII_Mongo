@@ -1,7 +1,11 @@
+
 const divEventos = document.querySelector('#listaDeEventos');
+const divEventosRedis = document.querySelector('#listaDeEventosRedis');
 const secEvnt = document.querySelector('#telaEventos');
+const secEvntRedis = document.querySelector('#telaEventosRedis');
 const secEdit = document.querySelector('#telaCadastro');
 const btnB = document.querySelector('.search-button');
+const btnRedis = document.querySelector('#btnRedis');
 const textoBusca = document.querySelector('#busca');
 const urlApi = 'http://localhost:3000/eventos';
 window.urlApi =urlApi;
@@ -38,7 +42,7 @@ window.salvarEvento = async function salvarEvento(obj){
         } catch (error) {
             console.error('Erro ao conectar com a API:', error);
             }
-    }
+    };
 };
 /* Essa função recebe os eventos do banco, monto o objeto e escreve no DOM
 da página, alé de seta os marcadores no mapa */
@@ -53,7 +57,13 @@ async function mostrarEventos(eventos){
         const dataTermino = formatarData(evento.dataTermino);
         const latiMostra = evento.lat;
         const longMostra = evento.lng;
-        addMarker(nome, descricao,latiMostra, longMostra);
+        vaiAddSim();
+        async function vaiAddSim(){
+            let adicionou = false;
+            while (!adicionou) {
+                adicionou = addMarker(nome, descricao,latiMostra, longMostra);                   
+            };
+        };        
         const novoEvento =         
         `<div class="containerEvento">
         <div class="nomeEvento"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
@@ -104,11 +114,21 @@ recuperei as coordenadas do DOM como texto e transformei em números para atuali
                     lat: latitude,
                     lng: longitude
                 };
-            atualizarInfoEvento(eventoAtualizado, id);
-            
+            atualizarInfoEvento(eventoAtualizado, id);            
         });
         const btnDeletar = document.querySelector('#deletar');
         btnDeletar.addEventListener('click', ()=>{
+            const eventoRedis={
+                _id:id,
+                author:autor,
+                eventName: document.querySelector('#eventName').value,
+                eventDescription: document.querySelector('#eventDescription').value,
+                dataInicio: document.querySelector('#dataInicio').value,
+                dataTermino: document.querySelector('#dataTermino').value,
+                lat: latiED,
+                lng: longED
+            };
+            salvarEventoRedis(eventoRedis);
             deletarEvento(nome, id);
         });
     };
@@ -234,6 +254,107 @@ function transfCoodenadasEmNumeros(coordenadas) {
     var lngCod = parseFloat(numeros[1].trim());
     return [latCod, lngCod]; 
 };
+/* ---------------------------------------REDIS--------------------------------------- */
+async function salvarEventoRedis(evento) {
+    try {
+        const response = await fetch(`${urlApi}/redis`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(evento)
+    });
+        const data = await response.json();
+        console.log('Evento salvo no Redis:', data);
+        alert("REDIS!!! SALVO!!");
+    } catch (error) {
+        console.error('Erro ao salvar o evento no Redis:', error);
+    }
+}; 
+btnRedis.addEventListener('click', ()=>{
+    const buscaAutor = document.querySelector('#buscaRedis').value;
+    buscarNoRedis(buscaAutor);
+});
+async function buscarNoRedis(texto){
+    const conect = await fetch(`${urlApi}/redis/${texto}`);
+    const evento = await conect.json();
+        const id = evento._id;
+        const autor = evento.author;
+        const nome = evento.eventName;
+        const descricao = evento.eventDescription;
+        const dataInicio = formatarData(evento.dataInicio);
+        const dataTermino = formatarData(evento.dataTermino);
+        const latiMostra = parseFloat(evento.lat);
+        const longMostra = parseFloat(evento.lng);
+    addMarker(nome, descricao, latiMostra, longMostra);
+    setMarkes();
+    const exibirEvento =         
+        `<div class="containerEvento">
+        <div class="nomeEvento"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
+        <div class="descricaoMostra"><p>${descricao}</p></div>
+        <div class="dataMostra"><b><p>Início: ${dataInicio}</p><p>Término: ${dataTermino}</p></div>
+        <div><a href="#" onclick = "recuperarEvento('${id}','${autor}','${nome}',' ${descricao}',' ${dataInicio}',' ${dataTermino}',' ${latiMostra}',' ${longMostra}')" class="cad">RECUPERAR EVENTO</a></div>
+        </div>`;  
+        divEventosRedis.innerHTML = divEventosRedis.innerHTML + exibirEvento; 
+};
+window.recuperarEvento=async function(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
+    let dataInicio = new Date(stringParaData(dataIn));
+    let dataTermino = new Date(stringParaData(dataTer)); 
+    trocarDivis(secEdit, secEvntRedis, 400); 
+    document.querySelector('#eventName').value=nome;
+    document.querySelector('#dataInicio').valueAsDate=dataInicio;
+    document.querySelector('#dataTermino').valueAsDate=dataTermino;
+    document.querySelector('#eventDescription').value=descricao;
+    document.querySelector('#eventCoordinates').value="Coordenadas";
+    let btnDeletar = document.querySelector('#deletar');
+    btnDeletar.style.display="none";
+    let btnRecuperar = document.querySelector('#btnAtualizar');
+    btnRecuperar.innerText = 'RECUPERAR';
+    const eventoRecuperado ={
+        _id: id,
+        author: autor,
+        eventName: nome,
+        eventDescription: descricao,
+        dataInicio: dataInicio,
+        dataTermino: dataTermino,
+        lat: parseFloat(latiED),
+        lng: parseFloat(longED)
+    };
+    btnRecuperar.addEventListener('click', ()=>{
+        console.log(eventoRecuperado.eventName);
+        deletarEventoRedis(eventoRecuperado.eventName);
+        const salvo = salvarEvento(eventoRecuperado);
+        if (!salvo) {            
+            alert("Erro ao recuperar evento!")
+        } else {
+            alert("Evento recuperado!");
+            location.reload();
+        }
+        
+    });
+};
+async function deletarEventoRedis(texto){
+    const conect = await fetch(`${urlApi}/redis/${texto}`, {
+        method: 'DELETE',
+        });
+        if (conect.ok) {
+            console.log('Evento deletado do Redis!');
+        } else {
+            console.log('Erro ao deletar evento do Redis:', conect.status);
+        }
+};
+
+// Função 3
+const linkRecuperarRedis = document.querySelector('#recuperarEvento');
+linkRecuperarRedis.addEventListener('click', ()=>{
+    abrirTelaRedis();
+});
+function abrirTelaRedis(){
+    trocarDivis(secEvntRedis, secEvnt, 400);
+    limparMarcadores();
+    
+};
+/* ---------------------------------------REDIS--------------------------------------- */
 // Esse grupo de funções fazem a busca por texto nos eventos da API
 textoBusca.addEventListener('input', (event)=>{
     const textoDigitado = event.target.value;
