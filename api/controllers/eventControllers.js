@@ -57,7 +57,7 @@ const salvarEventoRedis = async (req, res) => {
     const evento = req.body;
     console.log(evento.eventName);
     await client.set(`${evento.eventName}`, JSON.stringify(evento),{
-        EX: 6000
+        EX: 36000
     });
     
     res.status(200).send('Evento salvo com sucesso no Redis');
