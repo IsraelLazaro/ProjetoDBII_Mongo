@@ -47,7 +47,7 @@ async function initMap() {
         draggable: true,
         title: "Cajazeiras",
         animation: google.maps.Animation.BOUNCE
-    });
+    });    
     map.addListener("click", (event)=>{
         addMarker(event);
     });
@@ -73,7 +73,8 @@ btnCad.addEventListener('click', ()=>{
     };
     salvarEvento(evento);
     marker.setPosition(center);
-    trocarDivis(sectionApresenta, sectionCadastro, 500);    
+    trocarDivis(sectionApresenta, sectionCadastro, 500); 
+    map.setCenter(center);   
 });
 /* Adicona um evento click ao botão Cadastrar Evento para mudar a div para cadastro */
 chamarCad.addEventListener('click', ()=>{

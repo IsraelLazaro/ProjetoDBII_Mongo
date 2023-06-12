@@ -14,7 +14,7 @@ Este projeto é um exemplo de aplicação para WEB que gerencia o armazenamento 
 
 Para iniciar a aplicação, siga os seguintes passos:
 
-1. Faça o git clone "repositório" na sua máquina;
+1. Faça o git clone repositório na sua máquina;
 ```shell
 https://github.com/IsraelLazaro/ProjetoDBII_Mongo.git
 ```

@@ -382,7 +382,7 @@ async function buscarEvento(texto){
             const eventos = await response.json();
             limparMarcadores();
             mostrarEventos(eventos);
-            setMarkes();            
+            setMarkes();          
         } else {
             console.log('Erro ao buscar eventos:', response.status);
         };
