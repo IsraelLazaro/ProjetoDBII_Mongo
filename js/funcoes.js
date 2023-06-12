@@ -16,6 +16,7 @@ window.limparCampos = limparCampos;
 window.salvarEvento = salvarEvento;
 window.editar = editar;
 window.recuperarEvento= recuperarEvento;
+window.cetralizarMarcador = cetralizarMarcador;
 /*BLOCO DE FUNÇÕES  */
 // Essa função Salva o Evento no Banco de Dados MongoDB
 async function salvarEvento(obj){
@@ -72,7 +73,7 @@ async function mostrarEventos(eventos){
         };        
         const novoEvento =         
         `<div class="containerEvento">
-        <div class="nomeEvento"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
+        <div class="nomeEvento"><a href="#" onclick ="cetralizarMarcador(' ${latiMostra}',' ${longMostra}')" ><h4 class="panel-title" style="padding: 2%;">${nome}</h4></a></div>
         <div class="descricaoMostra"><p>${descricao}</p></div>
         <div class="dataMostra"><b><p>Início: ${dataInicio}</p><p>Término: ${dataTermino}</p></div>
         <div><a href="#" onclick = "editar('${id}','${autor}','${nome}',' ${descricao}',' ${dataInicio}',' ${dataTermino}',' ${latiMostra}',' ${longMostra}')" class="cad">EDITAR</a></div>
@@ -80,6 +81,10 @@ async function mostrarEventos(eventos){
         divEventos.innerHTML = divEventos.innerHTML + novoEvento; 
     });
 };
+function cetralizarMarcador(lati, long){
+    centralizar(lati, long, 14);
+};
+
 /* Essa função vai receber os valores das propriedades dos objetos recuperados do banco
 em seguida, vai inserir nos campos da tela de cadastro para o usuário editar */
 function editar(id, autor, nome, descricao, dataIn, dataTer, latiED, longED){
@@ -294,9 +299,10 @@ async function buscarNoRedis(texto){
         const longMostra = parseFloat(evento.lng);
     addMarker(nome, descricao, latiMostra, longMostra);
     setMarkes();
+    cetralizarMarcador(latiMostra, longMostra, 14);
     const exibirEvento =         
         `<div class="containerEvento">
-        <div class="nomeEvento"><h4 class="panel-title" style="padding: 2%;">${nome}</h4></div>
+        <div class="nomeEvento"><a href="#" onclick ="cetralizarMarcador(' ${latiMostra}',' ${longMostra}')" ><h4 class="panel-title" style="padding: 2%;">${nome}</h4></a></div>
         <div class="descricaoMostra"><p>${descricao}</p></div>
         <div class="dataMostra"><b><p>Início: ${dataInicio}</p><p>Término: ${dataTermino}</p></div>
         <div><a href="#" onclick = "recuperarEvento('${id}','${autor}','${nome}',' ${descricao}',' ${dataInicio}',' ${dataTermino}',' ${latiMostra}',' ${longMostra}')" class="cad">RECUPERAR EVENTO</a></div>

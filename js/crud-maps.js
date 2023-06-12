@@ -7,6 +7,7 @@ window.addMarker = addMarker;
 window.setMarkes = setMarkes;
 window.editMarker = editMarker;
 window.limparMarcadores=limparMarcadores;
+window.centralizar = centralizar;
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     map = new Map(document.getElementById("map"), {
@@ -32,7 +33,7 @@ async function setMarkes(){
                 }); 
             });
         markers[i].setAnimation(google.maps.Animation.BOUNCE);
-        };
+        };        
 };
 //Essa função adiciona o marcador no mapa e adiciona no arry de marcadores
 async function addMarker(nome, descricao, lati, long){
@@ -52,18 +53,26 @@ async function addMarker(nome, descricao, lati, long){
 function editMarker(nome, descricao, lati, long){
     markers=[];
     infoWindows=[];
+    let posicao = {
+        lat: parseFloat(lati),
+        lng: parseFloat(long)
+    }
     marker = new google.maps.Marker({
-        position: {
-            lat: parseFloat(lati),
-            lng: parseFloat(long)
-            },
+        position:posicao,
             map: map,
             title: `<h4 style="border-bottom-style:groove;">${nome}</h4><p>${descricao}</p>`,
         });
         markers.push(marker); 
+        map.setCenter(posicao);
         setMarkes();
         ativarMarcadores();       
 };
+function centralizar(lati, long, zoom){
+    var posicao = new google.maps.LatLng(parseFloat(lati), parseFloat(long));
+    map.setCenter(posicao);
+    map.setZoom(zoom);
+};
+
 // Essa função mostra todos os eventos ao abrir a página 
 async function todosOsEventos(){
     const conect = await fetch(urlApi);    
