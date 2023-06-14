@@ -44,7 +44,7 @@ const buscarEvento = async (req,res) =>{
                 
 };
 /* ---------------------------------------REDIS--------------------------------------------------- */
-const listarEventosRedis= async(req,res)=>{
+const buscarEventoRedis= async(req,res)=>{
     const retorno = await client.get(req.params.chave);
     if(retorno){
         console.log('Evento encontrado!');
@@ -78,4 +78,4 @@ const deletarDoRedis = async (req, res)=>{
 };
 /* ---------------------------------------REDIS--------------------------------------------------- */
 
-module.exports = {listarEventos, salvarEvento, editarEvento, deletarEvento, buscarEvento, salvarEventoRedis, listarEventosRedis, deletarDoRedis};
+module.exports = {listarEventos, salvarEvento, editarEvento, deletarEvento, buscarEvento, salvarEventoRedis, buscarEventoRedis, deletarDoRedis};

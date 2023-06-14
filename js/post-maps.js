@@ -78,15 +78,16 @@ btnCad.addEventListener('click', ()=>{
 });
 /* Adicona um evento click ao botão Cadastrar Evento para mudar a div para cadastro */
 chamarCad.addEventListener('click', ()=>{
-    setTimeout(() => {
-        trocarDivis(sectionCadastro, sectionApresenta, 300)
-    }, 500);
+    trocarDivis(sectionCadastro, sectionApresenta, 300);
 });
 /* Adicona um evento click ao botão voltar para a div inicial */
 btnVoltar.addEventListener('click', ()=>{
     setTimeout(() => {
-        trocarDivis(sectionApresenta, sectionCadastro, 300)
+        marker.setPosition(center);
+        trocarDivis(sectionApresenta, sectionCadastro, 300);
     }, 500);
+    
+
 });
 
 
